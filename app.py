@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template,redirect
 import os
 import fitz  # PyMuPDF
 
@@ -101,8 +101,11 @@ def home():
     </html>
     '''
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/analyze', methods=['POST','GET'])
 def analyze():
+    if request.method == 'GET':
+        # Redirect to homepage if someone visits /analyze directly
+        return redirect('/')
     resume = request.files['resume']
     job_role = request.form['job_role']
 
